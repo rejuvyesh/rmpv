@@ -1,5 +1,8 @@
 require "rmpv/version"
+require "traktr"
+require "myanimelist"
 
-module Rmpv
-  # Your code goes here...
+# local libs
+Dir["#{File.join(File.dirname(__FILE__), "rmpv")}/*.rb"].each do |lib|
+  require lib
 end
