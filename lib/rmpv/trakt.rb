@@ -4,7 +4,6 @@
 # File: trakt.rb
 #
 # Copyright rejuvyesh <mail@rejuvyesh.com>, 2013
-# License: GNU GPL 3 <http://www.gnu.org/copyleft/gpl.html>
 
 require "traktr"
 require "yaml"
