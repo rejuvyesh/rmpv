@@ -1,4 +1,5 @@
-# Rmpv
+rmpv
+====
 
 TODO: Write a gem description
 
