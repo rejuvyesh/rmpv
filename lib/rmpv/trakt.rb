@@ -11,7 +11,7 @@ require "yaml"
 module Rmpv
   class Trakt
     def self.scrobble show
-      traktconfig = YAML.load File.open("#Dir.home/.traktrc")
+      traktconfig = YAML.load File.open("#{Dir.home}/.traktrc")
       @trakt = Trakt::Client.new(traktconfig["api_key"], traktconfig["username"], traktconfig["password"], true)
       tries = 5
       begin
@@ -23,7 +23,7 @@ module Rmpv
         if tries > 0
           retry
         else
-          puts "Couldn't connect to trakt servers"
+          puts "Couldn't connect to trakt servers: #{res}"
         end
       end
     end
