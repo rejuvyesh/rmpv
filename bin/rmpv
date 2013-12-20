@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+# -*- encoding: utf-8 -*-
+# Copyright rejuvyesh <mail@rejuvyesh.com>, 2013
+
+require "shellwords"
+
+options = {
+  volume: 0,
+  speed: 1.0,
+}
+
+cmd = ["mpv"]
+
+# save position on exit
+cmd << "--save-position-on-quit"
+
+pwd = Dir.pwd
+
+# check if there is a .mp file in the current directory and add it as options
+
+if File.exists? ".mp"
+  File.open(".mp", "r").each do |line|
+    ARGV << line.chomp
+  end
+end 
+
+# parse options
+cmd, options = Rmpv::Option.parse(ARGV, cmd, options)
+
+cmd = Rmpv::Option.command(cmd, options)
+
+# begin execution
+file = Shellwords.shelljoin(ARGV)
+
+mpv = cmd.join(" ") + " " + file
+
+puts "running '#{mpv}'..."
+system mpv
+
+# mark as seen on trakt
+if options[:trakt]
+  show = ToName.to_name(file)
+  Rmpv::Trakt.scrobble(show)  
+end
