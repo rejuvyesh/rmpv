@@ -19,6 +19,20 @@ Or install it yourself as:
 
 ## Usage
 
+~~~
+Usage: rmpv [options]
+
+-+, --vol=VOL                    increase volume by VOL
+-l, --top-left                   play in top-left corner of the screen
+-b, --bottom-right               play in bottom-right corner of the screen
+-x, --speed SPEED                increase speed by SPEED
+-s, --size STR                   set size of the player
+-y, --youtube                    youtube mode
+-a, --audio                      audio mode
+-t, --trakt                      scrobble to trakt
+
+~~~
+
 TODO: Write usage instructions here
 
 ## Todo
