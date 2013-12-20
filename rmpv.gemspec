@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["mail@rejuvyesh.com"]
   spec.description   = %q{Ruby wrapper for mpv}
   spec.summary       = %q{A ruby wrapper around mpv with trakt and myanimelist scobble support}
-  spec.homepage      = "http://rejuvyesh.com/rmpv"
+  spec.homepage      = "http://github.com/rejuvyesh/rmpv"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
