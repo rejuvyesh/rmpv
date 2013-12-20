@@ -7,8 +7,19 @@
 
 require "optparse"
 
+##
+# This class represents the options that can be passed to `rmpv`
+
 module Rmpv
   class Option
+    ##
+    # Parses the commandline options
+    # args : the arguments to be passed
+    # cmd  : variable to which options are being added
+    # options : value of the options
+    #
+    # returns the new cmd and options
+    
     def self.parse args, cmd, options
       begin
         OptionParser.new do |opts|
@@ -49,6 +60,9 @@ module Rmpv
       return cmd, options
     end
 
+    ##
+    # Adds options to the command to be passed to mpv
+    
     def self.command cmd, options
       # size
       if options[:size]
