@@ -9,7 +9,7 @@ require "optparse"
 
 module Rmpv
   class Option
-    def self.parse args,cmd, options
+    def self.parse args, cmd, options
       begin
         OptionParser.new do |opts|
           opts.banner = "Usage: rmpv [options]"
