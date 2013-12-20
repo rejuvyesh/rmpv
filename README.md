@@ -3,6 +3,8 @@ rmpv
 
 Ruby wrapper around [mpv](http://mpv.io/) with [trakt](http://trakt.tv) and [myanimelist](http://myanimelist.net) scrobble support.
 
+[![Gem Version](https://badge.fury.io/rb/rmpv.png)](http://badge.fury.io/rb/rmpv)
+
 ## Installation
 
 Add this line to your application's Gemfile:
