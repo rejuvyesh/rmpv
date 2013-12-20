@@ -13,6 +13,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = "http://github.com/rejuvyesh/rmpv"
   spec.license       = "MIT"
 
+  s.rdoc_options     = ['--charset=UTF-8']
+  s.extra_rdoc_files = %w[README.md]
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
