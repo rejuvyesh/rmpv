@@ -42,5 +42,6 @@ system mpv
 # mark as seen on trakt
 if options[:trakt]
   show = ToName.to_name(file)
-  Rmpv::RTrakt.scrobble(show)  
+  trak = Rmpv::Trakt.new
+  trak.scrobble(show)  
 end

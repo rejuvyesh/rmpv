@@ -9,10 +9,12 @@ require "traktr"
 require "yaml"
 
 module Rmpv
-  class RTrakt
-    def self.scrobble show
+  class Trakt
+    def initialize
       traktconfig = YAML.load File.open("#{Dir.home}/.traktrc")
-      @trakt = Trakt::Client.new(traktconfig["api_key"], traktconfig["username"], traktconfig["password"], true)
+      @trakt = Traktr::Client.new(traktconfig["api_key"], traktconfig["username"], traktconfig["password"], true)
+    end
+    def scrobble show
       tries = 5
       begin
         info = @trakt.search.shows(show.name)
