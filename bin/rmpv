@@ -3,6 +3,7 @@
 # Copyright rejuvyesh <mail@rejuvyesh.com>, 2013
 
 require "shellwords"
+require "to_name"
 require "rmpv"
 
 options = {
