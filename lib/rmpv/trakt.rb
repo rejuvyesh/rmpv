@@ -20,6 +20,7 @@ module Rmpv
         info = @trakt.search.shows(show.name)
         @episodes = @trakt.show.season(info[0].title, show.series)
         res = @trakt.show.episode.seen(info[0], @episodes[show.episode-1..show.episode-1])
+        puts "Scrobbled to trakt (Y)"
       rescue Exception => e
         tries -= 1
         if tries > 0
