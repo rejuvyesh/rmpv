@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Rmpv::VERSION
   spec.authors       = ["rejuvyesh"]
   spec.email         = ["mail@rejuvyesh.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = "https://rejuvyesh.com/rmpv"
+  spec.description   = %q{Ruby wrapper for mpv}
+  spec.summary       = %q{A ruby wrapper around mpv with trakt and myanimelist scobble support}
+  spec.homepage      = "http://rejuvyesh.com/rmpv"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -18,10 +18,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  # core dependencies
-  spec.add_runtime_dependency "traktr", "~> 0"
-
-  # development dependencies
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+
+  spec.add_dependency "traktr"
 end

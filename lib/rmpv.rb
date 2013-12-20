@@ -1,8 +1,8 @@
-require "rmpv/version"
-require "traktr"
-require "myanimelist"
-
 # local libs
-Dir["#{File.join(File.dirname(__FILE__), "rmpv")}/*.rb"].each do |lib|
+Dir["#{File.join(File.dirname(__FILE__), "backup-urls")}/*.rb"].each do |lib|
   require lib
+end
+
+module Rmpv
+
 end
