@@ -1,7 +1,7 @@
 rmpv
 ====
 
-TODO: Write a gem description
+Ruby wrapper around [mpv](http://mpv.io/) with [trakt](http://trakt.tv) and [myanimelist](http://myanimelist.net) scrobble support.
 
 ## Installation
 
@@ -20,6 +20,11 @@ Or install it yourself as:
 ## Usage
 
 TODO: Write usage instructions here
+
+## Todo
+
+- Add myanimelist scrobble support
+- Use trakt scrobble rather than trakt seen for scrobbling. (This requires that we add scrobble support to [traktr](https://github.com/joelanford/traktr)).
 
 ## Contributing
 
