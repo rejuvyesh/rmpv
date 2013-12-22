@@ -21,6 +21,20 @@ Or install it yourself as:
 
 ## Usage
 
+First create a `.traktrc` file in your home directory and add the following content:
+
+```yaml
+    username: TRAKT_USERNAME
+    password: SHA1_HASH_OF_YOUR_PASSWORD
+    api_key:  GETYOURAPIKEYFROMTRAKT
+```
+You can get your api_key from http://trakt.tv/api-docs.
+You can use the following command to generate the SHA1 hash of your password:
+
+```bash
+    echo -n trakt_password | sha1sum | awk '{print toupper($1)}'
+```
+
      Usage: rmpv [options]
 
      -+, --vol=VOL                    increase volume by VOL
@@ -32,8 +46,6 @@ Or install it yourself as:
      -a, --audio                      audio mode
      -t, --trakt                      scrobble to trakt
      
-
-TODO: Write usage instructions here
 
 ## Todo
 
