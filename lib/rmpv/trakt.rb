@@ -21,16 +21,33 @@ module Rmpv
     end
 
     ##
+    # Set as watching
+
+    def watching show
+      tries = 5
+      begin
+        info = @trakt.search.shows(show.name)
+        res = @trakt.show.scrobble(info[0], show.series, show.episode, 10, Rmpv::VERSION, "Dec 22 2013")
+        puts "Watching to trakt (Y)"
+      rescue Exception => e
+        tries -= 1
+        if tries > 0
+          retry
+        else
+          puts "Couldn't connect to trakt servers: #{e}, #{res}"
+        end
+      end
+    end
+    
+    ##
     # Scrobble the show
     
     def scrobble show
       tries = 5
       begin
         info = @trakt.search.shows(show.name)
-        # @episodes = @trakt.show.season(info[0].title, show.series)
-        # res = @trakt.show.episode.seen(info[0], @episodes[show.episode-1..show.episode-1])
-        res = @trakt.show.checkin(info[0], show.series, show.episode, Rmpv::VERSION, "Dec 22 2013")
-        puts "Checked-in to trakt (Y)"
+        res = @trakt.show.scrobble(info[0], show.series, show.episode, 85, Rmpv::VERSION, "Dec 22 2013")
+        puts "Scrobbled to trakt (Y)"
       rescue Exception => e
         tries -= 1
         if tries > 0
