@@ -37,6 +37,13 @@ file = Shellwords.shelljoin(ARGV)
 mpv = cmd.join(" ") + " " + file
 
 puts "running '#{mpv}'..."
+
+if options[:trakt]
+  show = ToName.to_name(file)
+  @trak = Rmpv::Trakt.new
+  @trak.watching(show)  
+end
+
 system mpv
 
 # mark as seen on trakt
