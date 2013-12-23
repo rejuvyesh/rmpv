@@ -15,8 +15,6 @@ module Rmpv
     ##
     # Parses the commandline options
     # args : the arguments to be passed
-    # cmd  : variable to which options are being added
-    # options : value of the options
     #
     # returns the new cmd and options
 
