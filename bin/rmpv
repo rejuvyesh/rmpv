@@ -24,7 +24,7 @@ if File.exists? ".mp"
   File.open(".mp", "r").each do |line|
     ARGV << line.chomp
   end
-end 
+end
 
 # parse options
 cmd, options = Rmpv::Option.parse(ARGV, cmd, options)
@@ -38,17 +38,26 @@ mpv = cmd.join(" ") + " " + file
 
 puts "running '#{mpv}'..."
 
+# set as watching
 if options[:trakt]
-  show = ToName.to_name(file)
-  @trak = Rmpv::Trakt.new
-  @trak.watching(show)  
+  wat = Thread.new do
+    loop do
+      show = ToName.to_name(file)
+      @trak = Rmpv::Trakt.new
+      @trak.watching(show)
+      sleep(600) # wait for 10 minutes
+    end
+  end
 end
 
-system mpv
+pid = spawn(mpv)
+Process.wait(pid)
+
+Thread.kill(wat)
 
 # mark as seen on trakt
 if options[:trakt]
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
-  @trak.scrobble(show)  
+  @trak.scrobble(show)
 end
