@@ -6,20 +6,10 @@ require "shellwords"
 require "to_name"
 require "rmpv"
 
-options = {
-  volume: 0,
-  speed: 1.0,
-}
-
-cmd = ["mpv"]
-
-# save position on exit
-cmd << "--save-position-on-quit"
 
 pwd = Dir.pwd
 
 # check if there is a .mp file in the current directory and add it as options
-
 if File.exists? ".mp"
   File.open(".mp", "r").each do |line|
     ARGV << line.chomp
@@ -27,23 +17,20 @@ if File.exists? ".mp"
 end
 
 # parse options
-cmd, options = Rmpv::Option.parse(ARGV, cmd, options)
-
+cmd, options = Rmpv::Option.parse(ARGV)
 cmd = Rmpv::Option.command(cmd, options)
 
 # begin execution
 file = Shellwords.shelljoin(ARGV)
-
 mpv = cmd.join(" ") + " " + file
-
 puts "running '#{mpv}'..."
 
 # set as watching
-if options[:trakt]
+if options[:method].casecmp('trakt').zero?
+  show = ToName.to_name(file)
+  @trak = Rmpv::Trakt.new
   wat = Thread.new do
     loop do
-      show = ToName.to_name(file)
-      @trak = Rmpv::Trakt.new
       @trak.watching(show)
       sleep(600) # wait for 10 minutes
     end
@@ -56,7 +43,7 @@ Process.wait(pid)
 Thread.kill(wat)
 
 # mark as seen on trakt
-if options[:trakt]
+if options[:method].casecmp('trakt').zero?
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
   @trak.scrobble(show)

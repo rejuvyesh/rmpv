@@ -19,8 +19,10 @@ module Rmpv
     # options : value of the options
     #
     # returns the new cmd and options
-    
-    def self.parse args, cmd, options
+
+    def self.parse args
+      cmd = ["mpv"]
+      options = { volume: 0, speed: 1.0, }
       begin
         OptionParser.new do |opts|
           opts.banner = "Usage: rmpv [options]"
@@ -28,7 +30,6 @@ module Rmpv
           opts.on("-+", "--vol=VOL", Integer, "increase volume by VOL") do |v|
             options[:volume]   = v
           end
-
           opts.on("-l", "--top-left",     "play in top-left corner of the screen") do |tl|
             options[:position] = :top_left
           end
@@ -38,32 +39,33 @@ module Rmpv
           opts.on("-x", "--speed SPEED",  Float, "increase speed by SPEED") do |x|
             options[:speed]    = x
           end
-          opts.on("-s", "--size STR",     "set size of the player") do |sa| 
+          opts.on("-s", "--size STR",     "set size of the player") do |sa|
             options[:size]     = sa
           end
           opts.on("-y", "--youtube",      "youtube mode") do |y|
+            options[:mode] = 'youtube'
             options[:speed]    = 1.5
-            cmd << "--cache-default=2048"
           end
           opts.on("-a", "--audio",        "audio mode") do |a|
-            cmd << "--audio-display=no --gapless-audio"
+            options[:mode] = 'audio'
           end
-          opts.on("-t", "--trakt",        "scrobble to trakt") do |t| 
-            options[:trakt]    = true;
+          opts.on("-c", "--scrobble STR",     "scrobble to trakt or myanimelist") do |sa|
+            options[:method]  = sa
           end
         end.parse!
-
       rescue OptionParser::InvalidOption => e
         cmd << e.to_s.sub(/^invalid option:\s+/, "")
       end
-
       return cmd, options
     end
 
     ##
     # Adds options to the command to be passed to mpv
-    
+
     def self.command cmd, options
+      # save position on exit
+      cmd << "--save-position-on-quit"
+
       # size
       if options[:size]
         cmd << "--autofit='#{options[:size]}'"
@@ -77,16 +79,23 @@ module Rmpv
 
       # audio filter
       # Remove chirping at higher speed
-      cmd << "--af=scaletempo"  
+      cmd << "--af=scaletempo"
       if options[:volume].nonzero?
         cmd << "--af=volume=#{options[:volume]}"
       end
-
+      if options[:mode] == 'audio'
+        cmd << "--audio-display=no --gapless-audio"
+      end
+      
       # speed increase
       if options[:speed] != 1.0
         cmd << "--speed=#{options[:speed]}"
       end
 
+      # youtube mode
+      if options[:mode] == 'youtube'
+        cmd << "--cache-default=2048"
+      end
       return cmd
     end
   end
