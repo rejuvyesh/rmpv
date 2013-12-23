@@ -29,16 +29,17 @@ puts "running '#{mpv}'..."
 if options[:method].casecmp('trakt').zero?
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
+  duration = 0
   wat = Thread.new do
     loop do
-      @trak.watching(show)
+      @trak.watching(show, duration)
       sleep(600) # wait for 10 minutes
+      duration += 10
     end
   end
 end
 
-pid = spawn(mpv)
-Process.wait(pid)
+system mpv
 
 Thread.kill(wat)
 
