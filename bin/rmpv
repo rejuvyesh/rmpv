@@ -6,9 +6,6 @@ require "shellwords"
 require "to_name"
 require "rmpv"
 
-
-pwd = Dir.pwd
-
 # check if there is a .mp file in the current directory and add it as options
 if File.exists? ".mp"
   File.open(".mp", "r").each do |line|
@@ -29,12 +26,14 @@ puts "running '#{mpv}'..."
 if options[:method].casecmp('trakt').zero?
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
-  duration = 0
+  progress = 0
+  time = 0
   wat = Thread.new do
     loop do
-      @trak.watching(show, duration)
+      duration = @trak.watching(show, progress)
       sleep(600) # wait for 10 minutes
-      duration += 10
+      time += 10
+      progress = time*100/duration
     end
   end
 end
@@ -47,5 +46,7 @@ Thread.kill(wat)
 if options[:method].casecmp('trakt').zero?
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
-  @trak.scrobble(show)
+  if progress>=85
+    @trak.scrobble(show)
+  end
 end
