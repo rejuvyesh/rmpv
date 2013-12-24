@@ -22,18 +22,20 @@ file = Shellwords.shelljoin(ARGV)
 mpv = cmd.join(" ") + " " + file
 puts "running '#{mpv}'..."
 
+progress = 0
+time = 0
+
 # set as watching
 if options[:method].casecmp('trakt').zero?
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
-  progress = 0
-  time = 0
   wat = Thread.new do
     loop do
       duration = @trak.watching(show, progress)
       sleep(600) # wait for 10 minutes
       time += 10
       progress = time*100/duration
+      puts progress
     end
   end
 end
@@ -47,7 +49,8 @@ Thread.kill(wat)
 if options[:method].casecmp('trakt').zero?
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
-  if progress>=85
-    @trak.scrobble(show)
+  puts progress
+  if progress>=50
+    @trak.scrobble(show, progress)
   end
 end
