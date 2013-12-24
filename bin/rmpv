@@ -38,7 +38,8 @@ if options[:method].casecmp('trakt').zero?
   end
 end
 
-system mpv
+pid = spawn(mpv)
+Process.wait(pid)
 
 Thread.kill(wat)
 

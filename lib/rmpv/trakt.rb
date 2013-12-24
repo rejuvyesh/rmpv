@@ -16,8 +16,8 @@ module Rmpv
     # Initialize the trakt client
     
     def initialize
-      traktconfig = YAML.load File.open("#{Dir.home}/.traktrc")
-      @trakt = Traktr::Client.new(traktconfig["api_key"], traktconfig["username"], traktconfig["password"], true)
+      traktconfig = YAML.load File.open("#{Dir.home}/.rmpvrc")
+      @trakt = Traktr::Client.new(traktconfig["trakt_api_key"], traktconfig["trakt_username"], traktconfig["trakt_password"], true)
     end
 
     ##
