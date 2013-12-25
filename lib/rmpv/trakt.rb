@@ -23,11 +23,16 @@ module Rmpv
     ##
     # Set as watching
 
-    def watching show, progress
+    def watching show, progress, type='show'
       tries = 5
       begin
-        info = @trakt.search.shows(show.name)
-        res = @trakt.show.watching(info[0], show.series, show.episode, progress, Rmpv::VERSION, "Dec 22 2013")
+        if type=='show'
+          info = @trakt.search.shows(show.name)
+          res = @trakt.show.watching(info[0], show.series, show.episode, progress, Rmpv::VERSION, Rmpv::BUILD)
+        elsif type=='movie'
+          info = @trakt.search.movies(show.name)
+          res = @trakt.movie.watching(info[0], progress, Rmpv::VERSION, Rmpv::BUILD)
+        end
         puts "Watching to trakt (Y)"
       rescue Exception => e
         tries -= 1
@@ -44,11 +49,16 @@ module Rmpv
     ##
     # Scrobble the show
     
-    def scrobble show, progress
+    def scrobble show, progress, type='show'
       tries = 5
       begin
-        info = @trakt.search.shows(show.name)
-        res = @trakt.show.scrobble(info[0], show.series, show.episode, progress, Rmpv::VERSION, "Dec 22 2013")
+        if type=='show'
+          info = @trakt.search.shows(show.name)
+          res = @trakt.show.scrobble(info[0], show.series, show.episode, progress, Rmpv::VERSION, Rmpv::BUILD)
+        elsif type=='movie'
+          info = @trakt.search.movies(show.name)
+          res = @trakt.movie.scrobble(info[0], progress, Rmpv::VERSION, Rmpv::BUILD)
+        end
         puts "Scrobbled to trakt (Y)"
       rescue Exception => e
         tries -= 1

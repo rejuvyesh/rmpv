@@ -57,7 +57,7 @@ if options[:method].casecmp('movie').zero?
   @trak = Rmpv::Trakt.new
   wat = Thread.new do
     loop do
-      duration = @trak.watching(movie, progress)
+      duration = @trak.watching(movie, progress, 'movie')
       sleep(900) # wait for 15 minutes
       time += 10
       progress = time*100/duration
@@ -83,6 +83,22 @@ if options[:method].casecmp('show').zero?
     choice = yesno("Did not complete. Do you still want to scrobble?", false)
     if choice == 'y'
       @trak.scrobble(show, progress)
+    else
+      exit
+    end
+  end
+end
+
+if options[:method].casecmp('movie').zero?
+  movie = ToName.to_name(file)
+  @trak = Rmpv::Trakt.new
+  puts progress
+  if progress>=50
+    @trak.scrobble(movie, progress, 'movie')
+  else
+    choice = yesno("Did not complete. Do you still want to scrobble?", false)
+    if choice == 'y'
+      @trak.scrobble(movie, progress, 'movie')
     else
       exit
     end
