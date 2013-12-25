@@ -38,7 +38,7 @@ progress = 0
 time = 0
 
 # set as watching
-if options[:method].casecmp('show').zero?
+if options[:method] == 'show'
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
   wat = Thread.new do
@@ -52,7 +52,7 @@ if options[:method].casecmp('show').zero?
   end
 end
 
-if options[:method].casecmp('movie').zero?
+if options[:method] == 'movie'
   movie = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
   wat = Thread.new do
@@ -73,7 +73,7 @@ Process.wait(pid)
 Thread.kill(wat)
 
 # mark as seen on trakt
-if options[:method].casecmp('show').zero?
+if options[:method] == 'show'
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
   puts progress
@@ -89,7 +89,7 @@ if options[:method].casecmp('show').zero?
   end
 end
 
-if options[:method].casecmp('movie').zero?
+if options[:method] == 'movie'
   movie = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
   puts progress

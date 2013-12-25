@@ -48,7 +48,7 @@ module Rmpv
             options[:mode] = 'audio'
           end
           opts.on("-c", "--scrobble STR",     "scrobble 'movie' or 'show' to trakt or 'anime' to myanimelist") do |sa|
-            options[:method]  = sa
+            options[:method]  = sa.downcase
           end
         end.parse!
       rescue OptionParser::InvalidOption => e
