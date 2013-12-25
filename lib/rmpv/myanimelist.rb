@@ -16,13 +16,10 @@ module Rmpv
 
     def initialize
       myanimeconfig = YAML.load File.open('#{Dir.home}/.rmpvrc')
-<<<<<<< Updated upstream
-=======
       MyAnimeList.configure do |config|
         config.username = myanimeconfig["myanimelist"]["username"]
         config.password = myanimeconfig["myanimelist"]["password"]
       end
->>>>>>> Stashed changes
     end
 
     def scrobble show
