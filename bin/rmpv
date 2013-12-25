@@ -5,6 +5,18 @@
 require "shellwords"
 require "to_name"
 require "rmpv"
+require 'highline/import'
+
+def yesno(prompt = 'Continue?', default = true)
+  a = ''
+  s = default ? '[Y/n]' : '[y/N]'
+  d = default ? 'y' : 'n'
+  until %w[y n].include? a
+    a = ask("#{prompt} #{s} ") { |q| q.limit = 1; q.case = :downcase }
+    a = d if a.length == 0
+  end
+  a == 'y'
+end
 
 # check if there is a .mp file in the current directory and add it as options
 if File.exists? ".mp"
@@ -26,7 +38,7 @@ progress = 0
 time = 0
 
 # set as watching
-if options[:method].casecmp('trakt').zero?
+if options[:method].casecmp('show').zero?
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
   wat = Thread.new do
@@ -40,17 +52,39 @@ if options[:method].casecmp('trakt').zero?
   end
 end
 
+if options[:method].casecmp('movie').zero?
+  movie = ToName.to_name(file)
+  @trak = Rmpv::Trakt.new
+  wat = Thread.new do
+    loop do
+      duration = @trak.watching(movie, progress)
+      sleep(900) # wait for 15 minutes
+      time += 10
+      progress = time*100/duration
+      puts progress
+    end
+  end
+end
+
+
 pid = spawn(mpv)
 Process.wait(pid)
 
 Thread.kill(wat)
 
 # mark as seen on trakt
-if options[:method].casecmp('trakt').zero?
+if options[:method].casecmp('show').zero?
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
   puts progress
   if progress>=50
     @trak.scrobble(show, progress)
+  else
+    choice = yesno("Did not complete. Do you still want to scrobble?", false)
+    if choice == 'y'
+      @trak.scrobble(show, progress)
+    else
+      exit
+    end
   end
 end

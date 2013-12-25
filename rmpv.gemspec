@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "traktr"
   spec.add_dependency "toname"
+  spec.add_dependency "highline"
 end
