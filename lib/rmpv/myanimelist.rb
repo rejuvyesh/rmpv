@@ -25,13 +25,13 @@ module Rmpv
     def parse file
       raw_name = file
       raw_name = raw_name[0, raw_name.rindex(/\./)] # remove extension
-      raw_name = raw_name.gsub(/(\.|_|\-)/, '')  #Chars used in filenames as a substitute for spaces
+      raw_name = raw_name.gsub(/(\.|_|\-)/, '')  # Chars used in filenames as a substitute for spaces
       raw_name = raw_name.gsub(/\(.*?\)/, '') # Remove anything surrounded by paranthesis
       raw_name = raw_name.gsub(/\[.*?\]/, '') # Remove anything surrounded by paranthesis
       ep = /(\d+)/.match(raw_name)
-      name = raw_name.gsub(/(\d+)/, '')
+      name = raw_name.gsub(/(\d+)/, '').strip!
       episode = ep.nil? ? 1 : ep[1].to_i
-      return name.strip!, episode
+      return name, episode
     end
 
     def scrobble anime, ep
