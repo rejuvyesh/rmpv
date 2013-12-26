@@ -13,16 +13,21 @@ Gem::Specification.new do |spec|
   spec.homepage      = "http://github.com/rejuvyesh/rmpv"
   spec.license       = "MIT"
 
-  spec.rdoc_options     = ['--charset=UTF-8']
+  spec.has_rdoc         = 'yard'
   spec.extra_rdoc_files = %w[README.md]
+  
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.post_install_message = 'Please report any issues at: ' \
+        'https://github.com/rejuvyesh/rmpv/issues/new'
+  
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
-
+  spec.add_development_dependency "yard"
+  
   spec.add_dependency "traktr"
   spec.add_dependency "myanimelist"
   spec.add_dependency "toname"

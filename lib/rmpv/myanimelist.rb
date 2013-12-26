@@ -10,7 +10,6 @@ require "myanimelist"
 require "httparty"
 
 module Rmpv
-
   class MALRequester
     include HTTParty
     base_uri 'myanimelist.net'
@@ -18,10 +17,8 @@ module Rmpv
   end
   
   class Myanimelist
-
     ##
     # Initialize the Myanimelist client
-
     def initialize
       myanimeconfig = YAML.load File.open("#{Dir.home}/.rmpvrc")
       MyAnimeList.configure do |config|
@@ -30,6 +27,11 @@ module Rmpv
       end
     end
 
+    ##
+    # Parse the file names
+    #
+    # @param [String] file name
+    # @return [String, Fixnum] name of the show and episode number
     def parse file
       raw_name = file
       raw_name = raw_name[0, raw_name.rindex(/\./)] # remove extension
