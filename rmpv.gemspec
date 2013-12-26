@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
 
   spec.add_dependency "traktr"
+  spec.add_dependency "myanimelist"
   spec.add_dependency "toname"
   spec.add_dependency "highline"
 end

@@ -104,3 +104,9 @@ if options[:method] == 'movie'
     end
   end
 end
+
+if options[:method] == 'anime'
+  @anime = Rmpv::Myanimelist.new
+  ani, ep = Rmpv::Myanimelist.parse(file)
+  @anime.scrobble(ani, ep)
+end
