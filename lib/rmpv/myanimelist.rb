@@ -7,14 +7,22 @@
 
 require "yaml"
 require "myanimelist"
+require "httparty"
 
 module Rmpv
+
+  class MALRequester
+    include HTTParty
+    base_uri 'myanimelist.net'
+    #headers 'User-Agent' => "api-team-f894427cc1c571f79da49605ef8b112f"
+  end
+  
   class Myanimelist
 
     ##
     # Initialize the Myanimelist client
 
-    def initialize file
+    def initialize
       myanimeconfig = YAML.load File.open("#{Dir.home}/.rmpvrc")
       MyAnimeList.configure do |config|
         config.username = myanimeconfig["myanimelist"]["username"]
