@@ -5,17 +5,17 @@
 #
 # Copyright rejuvyesh <mail@rejuvyesh.com>, 2013
 
-require "yaml"
-require "myanimelist"
-require "httparty"
+require 'yaml'
+require 'myanimelist'
+require 'httparty'
 
 module Rmpv
   class MALRequester
     include HTTParty
     base_uri 'myanimelist.net'
-    #headers 'User-Agent' => "api-team-f894427cc1c571f79da49605ef8b112f"
+    # headers 'User-Agent' => "api-team-f894427cc1c571f79da49605ef8b112f"
   end
-  
+
   class Myanimelist
     ##
     # Initialize the Myanimelist client
@@ -32,19 +32,19 @@ module Rmpv
     #
     # @param [String] file name
     # @return [String, Fixnum] name of the show and episode number
-    def parse file
+    def parse(file)
       raw_name = file
       raw_name = raw_name[0, raw_name.rindex(/\./)] # remove extension
       raw_name = raw_name.gsub(/(\.|_|\-)/, '')  # Chars used in filenames as a substitute for spaces
       raw_name = raw_name.gsub(/\(.*?\)/, '') # Remove anything surrounded by paranthesis
       raw_name = raw_name.gsub(/\[.*?\]/, '') # Remove anything surrounded by paranthesis
-      ep = /(\d+)/.match(raw_name)
+      ep = /(\d+)/.match(raw_name)[1]
       name = raw_name.gsub(/(\d+)/, '').strip!
-      episode = ep.nil? ? 1 : ep[1].to_i
+      episode = ep.nil? ? 1 : ep.to_i
       return name, episode
     end
 
-    def scrobble anime, ep
+    def scrobble(anime, ep)
       tries = 5
       begin
         info = MyAnimeList.search_anime(anime)

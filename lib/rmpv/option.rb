@@ -18,12 +18,12 @@ module Rmpv
     #
     # returns the new cmd and options
 
-    def self.parse args
-      cmd = ["mpv"]
+    def self.parse(args)
+      cmd = ['mpv']
       options = { volume: 0, speed: 1.0, }
       begin
         OptionParser.new do |opts|
-          opts.banner = "Usage: rmpv [options]"
+          opts.banner = 'Usage: rmpv [options]'
 
           opts.on("-+", "--vol=VOL", Integer, "increase volume by VOL") do |v|
             options[:volume]   = v
@@ -52,7 +52,7 @@ module Rmpv
           end
         end.parse!
       rescue OptionParser::InvalidOption => e
-        cmd << e.to_s.sub(/^invalid option:\s+/, "")
+        cmd << e.to_s.sub(/^invalid option:\s+/, '')
       end
       return cmd, options
     end
@@ -60,41 +60,37 @@ module Rmpv
     ##
     # Adds options to the command to be passed to mpv
 
-    def self.command cmd, options
+    def self.command(cmd, options)
+      ## Saner defaults
       # save position on exit
-      cmd << "--save-position-on-quit"
+      cmd << '--save-position-on-quit'
+      # audio filter
+      # Remove chirping at higher speed
+      cmd << "--af=scaletempo"
 
       # size
-      if options[:size]
-        cmd << "--autofit='#{options[:size]}'"
-      end
+      cmd << "--autofit='#{options[:size]}'" if options[:size]
 
+      # position
       if options[:position] == :top_left
         cmd << "--geometry='0:17'"
       elsif options[:position] == :bottom_right
         cmd << "--geometry='100%:97%'"
       end
 
-      # audio filter
-      # Remove chirping at higher speed
-      cmd << "--af=scaletempo"
-      if options[:volume].nonzero?
-        cmd << "--af=volume=#{options[:volume]}"
-      end
-      if options[:mode] == 'audio'
-        cmd << "--audio-display=no --gapless-audio"
-      end
-      
+      # audio
+      cmd << "--af=volume=#{options[:volume]}" if options[:volume].nonzero?
+
+      cmd << "--audio-display=no --gapless-audio" if options[:mode] == 'audio'
+
       # speed increase
-      if options[:speed] != 1.0
-        cmd << "--speed=#{options[:speed]}"
-      end
+      cmd << "--speed=#{options[:speed]}" if options[:speed] != 1.0
 
       # youtube mode
-      if options[:mode] == 'youtube'
-        cmd << "--cache-default=2048"
-      end
-      return cmd
+
+      cmd << "--cache-default=2048" if options[:mode] == 'youtube'
+
+      cmd
     end
   end
 end
