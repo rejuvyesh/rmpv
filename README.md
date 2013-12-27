@@ -24,18 +24,18 @@ Or install it yourself as:
 First create a `.rmpvrc` file (which BTW is just a yaml file) in your home directory and add the following content:
 
 ```yaml
-    trakt:
-      username: TRAKT_USERNAME
-      password: SHA1_HASH_OF_YOUR_PASSWORD
-    myanimelist:
-      username: MYANIMELIST_USERNAME
-      password: MYANIMELIST_PASSWORD
+trakt:
+  username: TRAKT_USERNAME
+  password: SHA1_HASH_OF_YOUR_PASSWORD
+myanimelist:
+  username: MYANIMELIST_USERNAME
+  password: MYANIMELIST_PASSWORD
 ```
 
 You can use the following command to generate the SHA1 hash of your password:
 
-```bash
-    echo -n trakt_password | sha1sum | awk '{print toupper($1)}'
+```sh
+echo -n trakt_password | sha1sum | awk '{print toupper($1)}'
 ```
 
      Usage: rmpv [options]
