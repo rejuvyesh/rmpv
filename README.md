@@ -21,18 +21,21 @@ Or install it yourself as:
 
 ## Usage
 
-First create a `.traktrc` file in your home directory and add the following content:
+First create a `.rmpvrc` file (which BTW is just a yaml file) in your home directory and add the following content:
 
 ```yaml
-    username: TRAKT_USERNAME
-    password: SHA1_HASH_OF_YOUR_PASSWORD
-    api_key:  GETYOURAPIKEYFROMTRAKT
+trakt:
+  username: TRAKT_USERNAME
+  password: SHA1_HASH_OF_YOUR_PASSWORD
+myanimelist:
+  username: MYANIMELIST_USERNAME
+  password: MYANIMELIST_PASSWORD
 ```
-You can get your api_key from http://trakt.tv/api-docs.
+
 You can use the following command to generate the SHA1 hash of your password:
 
-```bash
-    echo -n trakt_password | sha1sum | awk '{print toupper($1)}'
+```sh
+echo -n trakt_password | sha1sum | awk '{print toupper($1)}'
 ```
 
      Usage: rmpv [options]
@@ -44,13 +47,12 @@ You can use the following command to generate the SHA1 hash of your password:
      -s, --size STR                   set size of the player
      -y, --youtube                    youtube mode
      -a, --audio                      audio mode
-     -t, --trakt                      scrobble to trakt
+     -c, --scrobble STR               scrobble 'movie' or 'show' to trakt or 'anime' to myanimelist
      
 
 ## Todo
 
 - Add myanimelist scrobble support
-- Use trakt scrobble rather than trakt seen for scrobbling. (This requires that we add scrobble support to [traktr](https://github.com/joelanford/traktr)).
 
 ## Contributing
 
