@@ -60,24 +60,23 @@ if options[:method] == 'movie'
       duration = @trak.watching(movie, progress, 'movie')
       sleep(900) # wait for 15 minutes
       time += 10
-      progress = time*100/duration
+      progress = time * 100 / duration
       puts progress
     end
   end
 end
 
-
 pid = spawn(mpv)
 Process.wait(pid)
 
-Thread.kill(wat)
+Thread.kill(wat) if %w('movie' 'show').include? options[:method]
 
 # mark as seen on trakt
 if options[:method] == 'show'
   show = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
   puts progress
-  if progress>=50
+  if progress >= 50
     @trak.scrobble(show, progress)
   else
     choice = yesno("Did not complete. Do you still want to scrobble?", false)
@@ -93,7 +92,7 @@ if options[:method] == 'movie'
   movie = ToName.to_name(file)
   @trak = Rmpv::Trakt.new
   puts progress
-  if progress>=50
+  if progress >= 50
     @trak.scrobble(movie, progress, 'movie')
   else
     choice = yesno("Did not complete. Do you still want to scrobble?", false)
