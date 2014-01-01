@@ -81,7 +81,7 @@ if options[:method] == 'show'
   else
     choice = yesno("Did not complete. Do you still want to scrobble?", false)
     if choice == 'y'
-      @trak.scrobble(show, progress)
+      @trak.scrobble(show, 100)
     else
       exit
     end
@@ -97,7 +97,7 @@ if options[:method] == 'movie'
   else
     choice = yesno("Did not complete. Do you still want to scrobble?", false)
     if choice == 'y'
-      @trak.scrobble(movie, progress, 'movie')
+      @trak.scrobble(movie, 100, 'movie')
     else
       exit
     end
