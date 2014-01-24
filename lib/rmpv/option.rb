@@ -42,6 +42,8 @@ module Rmpv
           end
           opts.on("-y", "--youtube",      "youtube mode") do |y|
             options[:mode] = 'youtube'
+          end
+          opts.on("-l", "--lecture", "lecture mode") do |l|
             options[:speed]    = 1.5
           end
           opts.on("-a", "--audio",        "audio mode") do |a|
@@ -88,9 +90,7 @@ module Rmpv
 
       # youtube mode
 
-      cmd << "--cache-default=2048" if options[:mode] == 'youtube'
-
-      cmd
+      cmd << "--cache-default=20000" if options[:mode] == 'youtube'
     end
   end
 end
